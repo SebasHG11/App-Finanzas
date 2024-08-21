@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Saldo } from "@/components/Saldo";
 import { TotalIngresos } from "@/components/TotalIngresos";
 import { TotalGastos } from "@/components/TotalGastos";
@@ -11,6 +13,21 @@ import { CardIngreso } from "@/components/CardIngreso";
 import { CardGasto } from "@/components/CardGasto";
 
 export default function Home() {
+  const [categorias, setCategorias] = useState<Category[]>([]);
+
+  const getCategorias = async() =>{
+    try{
+      const response = await axios.get<Category[]>("http://localhost:5216/v1/Categoria");
+      setCategorias(response.data);
+    }catch(error){
+      console.log(error);
+    }
+  }
+
+  useEffect(() =>{
+    getCategorias();
+  }, []);
+
   return (
     <div className="m-10 grid place-items-center">
       <Saldo />
@@ -23,7 +40,12 @@ export default function Home() {
       <TotalIngresos />
       <TotalGastos />
       <ContenedorOperaciones>
-        <CardCategoria />
+        {
+          categorias &&
+          categorias.map(categoria =>(
+            <CardCategoria key={categoria.id} categoria={categoria} />
+          ))
+        }
       </ContenedorOperaciones>
       <ContenedorOperaciones>
         <CardIngreso />
