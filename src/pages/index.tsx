@@ -14,6 +14,7 @@ import { CardCategoria } from "@/components/CardCategoria";
 import { CardIngreso } from "@/components/CardIngreso";
 import { CardGasto } from "@/components/CardGasto";
 import { sumarTotal } from "@/helpers/sumarTotal";
+import { FormAggCatIngreso } from "@/components/FormAggCatIngreso";
 
 export default function Home() {
   const context = useContext(FinanzaContext);
@@ -109,6 +110,7 @@ export default function Home() {
             <p>Cargando...</p>
           }
         </ContenedorOperaciones>
+        <FormAggCatIngreso />
       </div>
     </AppProvider>
   );
