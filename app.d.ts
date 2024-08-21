@@ -13,3 +13,12 @@ type Ingreso = {
     categoriaId: number,
     categoria: Category
 }
+
+type Gasto = {
+    id: number,
+    concepto: string,
+    monto: number,
+    fecha: string
+    categoriaId: number,
+    categoria: Category
+}

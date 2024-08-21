@@ -17,6 +17,7 @@ import { CardGasto } from "@/components/CardGasto";
 export default function Home() {
   const [categorias, setCategorias] = useState<Category[]>([]);
   const [ingresos, setIngresos] = useState<Ingreso[]>([]);
+  const [gastos, setGastos] = useState<Gasto[]>([]);
 
   const getCategorias = async() =>{
     try{
@@ -36,12 +37,20 @@ export default function Home() {
     }
   }
 
+  const getGastos = async() =>{
+    try{
+      const response = await axios.get<Gasto[]>("http://localhost:5216/v1/Gasto");
+      setGastos(response.data);
+    }catch(error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() =>{
     getCategorias();
     getIngresos();
+    getGastos();
   }, []);
-
-  console.log(ingresos);
 
   return (
     <AppProvider>
@@ -76,7 +85,13 @@ export default function Home() {
           }
         </ContenedorOperaciones>
         <ContenedorOperaciones>
-          <CardGasto />
+          {gastos ?
+            gastos.map(gasto =>(
+              <CardGasto key={gasto.id} gasto={gasto} />
+            ))
+            :
+            <p>Cargando...</p>
+          }
         </ContenedorOperaciones>
       </div>
     </AppProvider>
