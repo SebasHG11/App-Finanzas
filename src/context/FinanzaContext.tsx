@@ -5,9 +5,7 @@ type Props ={
 }
 
 type FinanzaContextType = {
-    formatMonto: (amount: number) => string, 
-    useTotalIngresos: number,
-    setUseTotalIngresos: Dispatch<SetStateAction<number>>,
+    formatMonto: (amount: number) => string,
     formatFecha: (fecha: string) => string
 }
 
@@ -21,8 +19,6 @@ export const AppProvider: React.FC<Props> = ({ children }) =>{
         }
         return amount.toLocaleString('es-ES')
     }
-
-    const [useTotalIngresos, setUseTotalIngresos] = useState<number>(0);
 
     const formatFecha = (fecha: string): string => {
         if (!fecha) {
@@ -50,8 +46,6 @@ export const AppProvider: React.FC<Props> = ({ children }) =>{
     return(
         <FinanzaContext.Provider value={{
             formatMonto,
-            useTotalIngresos,
-            setUseTotalIngresos,
             formatFecha
         }}>
             {children}

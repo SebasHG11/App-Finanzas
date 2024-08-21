@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { AppProvider } from "@/context/FinanzaContext";
+import { useContext, useEffect, useState } from "react";
+import { AppProvider, FinanzaContext } from "@/context/FinanzaContext";
 import { Saldo } from "@/components/Saldo";
 import { TotalIngresos } from "@/components/TotalIngresos";
 import { TotalGastos } from "@/components/TotalGastos";
@@ -13,11 +13,17 @@ import { ContenedorOperaciones } from "@/components/ContenedorOperaciones";
 import { CardCategoria } from "@/components/CardCategoria";
 import { CardIngreso } from "@/components/CardIngreso";
 import { CardGasto } from "@/components/CardGasto";
+import { sumarTotal } from "@/helpers/sumarTotal";
 
 export default function Home() {
+  const context = useContext(FinanzaContext);
+
   const [categorias, setCategorias] = useState<Category[]>([]);
   const [ingresos, setIngresos] = useState<Ingreso[]>([]);
   const [gastos, setGastos] = useState<Gasto[]>([]);
+
+  const [sumaTotalIngresos, setSumaTotalIngresos] = useState<number>(0);
+  const [sumaTotalGastos, setSumaTotalGastos] = useState<number>(0);
 
   const getCategorias = async() =>{
     try{
@@ -52,6 +58,11 @@ export default function Home() {
     getGastos();
   }, []);
 
+  useEffect(() =>{
+    setSumaTotalIngresos(sumarTotal(ingresos));
+    setSumaTotalGastos(sumarTotal(gastos));
+  },[ingresos, gastos]);
+
   return (
     <AppProvider>
       <div className="m-10 grid place-items-center">
@@ -63,8 +74,11 @@ export default function Home() {
           <BtnCrearGasto />
         </div>
         <Mes />
-        <TotalIngresos />
-        <TotalGastos />
+        <div className="flex items-center content-around gap-10">
+          <TotalIngresos sumaTotalIngresos={sumaTotalIngresos} />
+          <TotalGastos sumaTotalGastos={sumaTotalGastos} />
+        </div>
+        <h1 className="m-3 text-2xl font-bold">Categorias</h1>
         <ContenedorOperaciones>
           {
             categorias ?
@@ -75,6 +89,7 @@ export default function Home() {
             <p>Cargando...</p>
           }
         </ContenedorOperaciones>
+        <h1 className="m-3 text-2xl font-bold">Ingresos</h1>
         <ContenedorOperaciones>
           {ingresos ?
             ingresos.map(ingreso =>(
@@ -84,6 +99,7 @@ export default function Home() {
             <p>Cargando...</p>
           }
         </ContenedorOperaciones>
+        <h1 className="m-3 text-2xl font-bold">Gastos</h1>
         <ContenedorOperaciones>
           {gastos ?
             gastos.map(gasto =>(
