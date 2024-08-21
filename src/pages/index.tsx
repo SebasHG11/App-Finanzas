@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { AppProvider } from "@/context/FinanzaContext";
 import { Saldo } from "@/components/Saldo";
 import { TotalIngresos } from "@/components/TotalIngresos";
 import { TotalGastos } from "@/components/TotalGastos";
-import { BtnCrearCategoria } from "@/components/BtnCrearCategoria";
+import { BtnCrearCategoriaIngresos } from "@/components/BtnCrearCategoriaIngresos";
+import { BtnCrearCategoriaGastos } from "@/components/BtnCrearCategoriaGastos";
 import { BtnCrearIngreso } from "@/components/BtnCrearIngreso";
 import { BtnCrearGasto } from "@/components/BtnCrearGasto";
 import { Mes } from "@/components/Mes";
@@ -11,10 +13,10 @@ import { ContenedorOperaciones } from "@/components/ContenedorOperaciones";
 import { CardCategoria } from "@/components/CardCategoria";
 import { CardIngreso } from "@/components/CardIngreso";
 import { CardGasto } from "@/components/CardGasto";
-import { AppProvider } from "@/context/FinanzaContext";
 
 export default function Home() {
   const [categorias, setCategorias] = useState<Category[]>([]);
+  const [ingresos, setIngresos] = useState<Ingreso[]>([]);
 
   const getCategorias = async() =>{
     try{
@@ -25,16 +27,29 @@ export default function Home() {
     }
   }
 
+  const getIngresos = async() =>{
+    try{
+      const response = await axios.get<Ingreso[]>("http://localhost:5216/v1/Ingreso");
+      setIngresos(response.data);
+    } catch(error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() =>{
     getCategorias();
+    getIngresos();
   }, []);
+
+  console.log(ingresos);
 
   return (
     <AppProvider>
       <div className="m-10 grid place-items-center">
         <Saldo />
         <div className="flex items-center content-around gap-10 m-5">
-          <BtnCrearCategoria />
+          <BtnCrearCategoriaIngresos />
+          <BtnCrearCategoriaGastos />
           <BtnCrearIngreso />
           <BtnCrearGasto />
         </div>
@@ -52,7 +67,13 @@ export default function Home() {
           }
         </ContenedorOperaciones>
         <ContenedorOperaciones>
-          <CardIngreso />
+          {ingresos ?
+            ingresos.map(ingreso =>(
+              <CardIngreso key={ingreso.id} ingreso={ingreso} />
+            ))
+            :
+            <p>Cargando...</p>
+          }
         </ContenedorOperaciones>
         <ContenedorOperaciones>
           <CardGasto />
