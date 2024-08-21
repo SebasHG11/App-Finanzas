@@ -11,6 +11,7 @@ import { ContenedorOperaciones } from "@/components/ContenedorOperaciones";
 import { CardCategoria } from "@/components/CardCategoria";
 import { CardIngreso } from "@/components/CardIngreso";
 import { CardGasto } from "@/components/CardGasto";
+import { AppProvider } from "@/context/FinanzaContext";
 
 export default function Home() {
   const [categorias, setCategorias] = useState<Category[]>([]);
@@ -29,30 +30,34 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="m-10 grid place-items-center">
-      <Saldo />
-      <div className="flex items-center content-around gap-10 m-5">
-        <BtnCrearCategoria />
-        <BtnCrearIngreso />
-        <BtnCrearGasto />
+    <AppProvider>
+      <div className="m-10 grid place-items-center">
+        <Saldo />
+        <div className="flex items-center content-around gap-10 m-5">
+          <BtnCrearCategoria />
+          <BtnCrearIngreso />
+          <BtnCrearGasto />
+        </div>
+        <Mes />
+        <TotalIngresos />
+        <TotalGastos />
+        <ContenedorOperaciones>
+          {
+            categorias ?
+            categorias.map(categoria =>(
+              <CardCategoria key={categoria.id} categoria={categoria} />
+            ))
+            :
+            <p>Cargando...</p>
+          }
+        </ContenedorOperaciones>
+        <ContenedorOperaciones>
+          <CardIngreso />
+        </ContenedorOperaciones>
+        <ContenedorOperaciones>
+          <CardGasto />
+        </ContenedorOperaciones>
       </div>
-      <Mes />
-      <TotalIngresos />
-      <TotalGastos />
-      <ContenedorOperaciones>
-        {
-          categorias &&
-          categorias.map(categoria =>(
-            <CardCategoria key={categoria.id} categoria={categoria} />
-          ))
-        }
-      </ContenedorOperaciones>
-      <ContenedorOperaciones>
-        <CardIngreso />
-      </ContenedorOperaciones>
-      <ContenedorOperaciones>
-        <CardGasto />
-      </ContenedorOperaciones>
-    </div>
+    </AppProvider>
   );
 }

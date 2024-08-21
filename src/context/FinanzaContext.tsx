@@ -1,12 +1,16 @@
-import { createContext } from "vm";
+import { createContext } from "react";
 
 type Props ={
     children: React.ReactNode
 }
 
-export const FinanzaContext = createContext();
+type FinanzaContextType = {
+    formatMonto: (amount: number) => string
+}
 
-export const AppProvider = ({ children }: Props) =>{
+export const FinanzaContext = createContext<FinanzaContextType | undefined>(undefined);
+
+export const AppProvider: React.FC<Props> = ({ children }) =>{
 
     const formatMonto = (amount: number) => {
         if (typeof amount !== 'number' || isNaN(amount)) {
