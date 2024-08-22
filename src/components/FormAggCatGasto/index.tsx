@@ -1,7 +1,7 @@
 import { useForm } from "@/helpers/useForm";
 import { FormEvent } from "react";
 
-export const FormAggCatIngreso = (): JSX.Element => {
+export const FormAggCatGasto = (): JSX.Element => {
   const initialState = {
     nombre: "",
     presupuesto: "0"
@@ -23,23 +23,24 @@ export const FormAggCatIngreso = (): JSX.Element => {
 
   return (
     <div className="w-full">
-      <form className="w-full" onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className="w-full">
         <div className="flex flex-col items-start w-1/2 mx-auto">
           <label className="text-start" htmlFor="nombre">Nombre</label>
           <input 
-            className="m-2 w-full border-2 border-gray-300 px-4 py-2 bg-blue-100" 
+            className="m-2 w-full border-2 border-gray-300 bg-blue-100 px-4 py-2" 
             type="text" 
-            name="nombre" onChange={onInputChange}
-            value={nombre} 
+            name="nombre"
+            onChange={onInputChange} 
+            value={nombre}
           />
         </div>
         <div className="flex flex-col items-start w-1/2 mx-auto">
           <label className="text-start" htmlFor="presupuesto">Presupuesto</label>
           <input 
-            className="m-2 w-full border-2 border-gray-300 px-4 py-2 bg-blue-100" 
+            className="m-2 w-full border-2 border-gray-300 bg-blue-100 px-4 py-2" 
             type="text" 
             name="presupuesto" 
-            onChange={onInputChange} 
+            onChange={onInputChange}
             value={presupuesto}
           />
         </div>
@@ -52,6 +53,5 @@ export const FormAggCatIngreso = (): JSX.Element => {
         </div>
       </form>
     </div>
-
   );
 }

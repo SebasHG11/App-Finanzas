@@ -15,6 +15,9 @@ import { CardIngreso } from "@/components/CardIngreso";
 import { CardGasto } from "@/components/CardGasto";
 import { sumarTotal } from "@/helpers/sumarTotal";
 import { FormAggCatIngreso } from "@/components/FormAggCatIngreso";
+import { FormAggCatGasto } from "@/components/FormAggCatGasto";
+import { FormAggIngreso } from "@/components/FormAggIngreso";
+import { FormAggGasto } from "@/components/FormAggGasto";
 
 export default function Home() {
   const context = useContext(FinanzaContext);
@@ -111,6 +114,9 @@ export default function Home() {
           }
         </ContenedorOperaciones>
         <FormAggCatIngreso />
+        <FormAggCatGasto />
+        <FormAggIngreso />
+        <FormAggGasto />
       </div>
     </AppProvider>
   );
