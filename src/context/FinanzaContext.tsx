@@ -6,7 +6,8 @@ type Props ={
 
 type FinanzaContextType = {
     formatMonto: (amount: number) => string,
-    formatFecha: (fecha: string) => string
+    formatFecha: (fecha: string) => string,
+    formatDateUTC: (fecha: string) => string
 }
 
 export const FinanzaContext = createContext<FinanzaContextType | undefined>(undefined);
@@ -43,10 +44,27 @@ export const AppProvider: React.FC<Props> = ({ children }) =>{
         return `${day}/${month}/${year} ${hours}:${minutes}`;
     };
 
+    const formatDateUTC = (dateString: string): string => {
+        const date = new Date(dateString);
+        
+        // Obtén las partes de la fecha
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Meses empiezan en 0
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+        const milliseconds = String(date.getMilliseconds()).padStart(6, '0'); // Milisegundos
+      
+        // Construye la fecha en el formato deseado
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
+      };
+
     return(
         <FinanzaContext.Provider value={{
             formatMonto,
-            formatFecha
+            formatFecha,
+            formatDateUTC
         }}>
             {children}
         </FinanzaContext.Provider>
