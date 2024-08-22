@@ -10,5 +10,10 @@ export const Modal = ({ children }: Props): JSX.Element => {
 
   if (!portalRoot) return <div></div>
 
-  return ReactDOM.createPortal(children, portalRoot)
+  return ReactDOM.createPortal(
+    <div className="portal-root">
+      {children}
+    </div>,
+    portalRoot
+  )
 };
