@@ -1,7 +1,7 @@
 import { FinanzaContext } from "@/context/FinanzaContext";
 import { fetchData } from "@/helpers/fetchData";
 import { useForm } from "@/helpers/useForm";
-import { FormEvent, useContext, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState, MouseEvent } from "react";
 
 export const FormAggGasto = (): JSX.Element => {
   const context = useContext(FinanzaContext);
@@ -51,11 +51,19 @@ export const FormAggGasto = (): JSX.Element => {
     resetForm();
   }
 
+  const handleCancelar = (e: MouseEvent<HTMLSpanElement, globalThis.MouseEvent>) =>{
+    e.preventDefault();
+    context?.setOpenModalGastos(false);
+  }
+
   return (
     <div className="w-full">
+      <div className="flex justify-center">
+        <h1 className="text-3xl font-bold text-white">Gastos</h1>
+      </div>
       <form onSubmit={onSubmit} className="w-full">
         <div className="flex flex-col items-start w-1/2 mx-auto">
-          <label htmlFor="concepto">Concepto</label>
+          <label className="text-white" htmlFor="concepto">Concepto</label>
           <input
             className="m-2 w-full border-2 border-gray-300 px-4 py-2 bg-blue-100"
             type="text"
@@ -65,7 +73,7 @@ export const FormAggGasto = (): JSX.Element => {
           />
         </div>
         <div className="flex flex-col items-start w-1/2 mx-auto">
-          <label htmlFor="monto">Monto</label>
+          <label className="text-white" htmlFor="monto">Monto</label>
           <input
             className="m-2 w-full border-2 border-gray-300 px-4 py-2 bg-blue-100"
             type="text"
@@ -75,7 +83,7 @@ export const FormAggGasto = (): JSX.Element => {
           />
         </div>
         <div className="flex flex-col items-start w-1/2 mx-auto">
-          <label htmlFor="fecha">Fecha</label>
+          <label className="text-white" htmlFor="fecha">Fecha</label>
           <input
             className="m-2 w-full border-2 border-gray-300 px-4 py-2 bg-blue-100"
             type="datetime-local"
@@ -85,7 +93,7 @@ export const FormAggGasto = (): JSX.Element => {
           />
         </div>
         <div className="flex flex-col items-start w-1/2 mx-auto">
-          <label htmlFor="categoriaId">Categoria</label>
+          <label className="text-white" htmlFor="categoriaId">Categoria</label>
           <select
             className="m-2 w-full border-2 border-gray-300 px-4 py-2 bg-blue-100"
             name="categoriaId"
@@ -107,6 +115,14 @@ export const FormAggGasto = (): JSX.Element => {
           />
         </div>
       </form>
+      <div className="grid place-items-center">
+        <span 
+          onClick={handleCancelar}
+          className="px-6 py-2 bg-red-600 text-white font-bold rounded-lg cursor-pointer"
+        >
+          Cancelar
+        </span>
+      </div>
     </div>
   );
 }
