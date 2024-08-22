@@ -18,8 +18,9 @@ import { FormAggCatIngreso } from "@/components/FormAggCatIngreso";
 import { FormAggCatGasto } from "@/components/FormAggCatGasto";
 import { FormAggIngreso } from "@/components/FormAggIngreso";
 import { FormAggGasto } from "@/components/FormAggGasto";
+import { Modal } from "@/components/Modal";
 
-export default function Home() {
+function HomeContent() {
   const context = useContext(FinanzaContext);
 
   const [categorias, setCategorias] = useState<Category[]>([]);
@@ -29,95 +30,121 @@ export default function Home() {
   const [sumaTotalIngresos, setSumaTotalIngresos] = useState<number>(0);
   const [sumaTotalGastos, setSumaTotalGastos] = useState<number>(0);
 
-  const getCategorias = async() =>{
-    try{
+  const getCategorias = async () => {
+    try {
       const response = await axios.get<Category[]>("http://localhost:5216/v1/Categoria");
       setCategorias(response.data);
-    }catch(error){
+    } catch (error) {
       console.log(error);
     }
   }
 
-  const getIngresos = async() =>{
-    try{
+  const getIngresos = async () => {
+    try {
       const response = await axios.get<Ingreso[]>("http://localhost:5216/v1/Ingreso");
       setIngresos(response.data);
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   }
 
-  const getGastos = async() =>{
-    try{
+  const getGastos = async () => {
+    try {
       const response = await axios.get<Gasto[]>("http://localhost:5216/v1/Gasto");
       setGastos(response.data);
-    }catch(error) {
+    } catch (error) {
       console.log(error);
     }
   }
 
-  useEffect(() =>{
+  useEffect(() => {
     getCategorias();
     getIngresos();
     getGastos();
   }, []);
 
-  useEffect(() =>{
+  useEffect(() => {
     setSumaTotalIngresos(sumarTotal(ingresos));
     setSumaTotalGastos(sumarTotal(gastos));
-  },[ingresos, gastos]);
+  }, [ingresos, gastos]);
 
   return (
-    <AppProvider>
-      <div className="m-10 grid place-items-center">
-        <Saldo />
-        <div className="flex items-center content-around gap-10 m-5">
-          <BtnCrearCategoriaIngresos />
-          <BtnCrearCategoriaGastos />
-          <BtnCrearIngreso />
-          <BtnCrearGasto />
-        </div>
-        <Mes />
-        <div className="flex items-center content-around gap-10">
-          <TotalIngresos sumaTotalIngresos={sumaTotalIngresos} />
-          <TotalGastos sumaTotalGastos={sumaTotalGastos} />
-        </div>
-        <h1 className="m-3 text-2xl font-bold">Categorias</h1>
-        <ContenedorOperaciones>
-          {
-            categorias ?
-            categorias.map(categoria =>(
+    <div className="m-10 grid place-items-center">
+      <Saldo />
+      <div className="flex items-center content-around gap-10 m-5">
+        <BtnCrearCategoriaIngresos />
+        <BtnCrearCategoriaGastos />
+        <BtnCrearIngreso />
+        <BtnCrearGasto />
+      </div>
+      <Mes />
+      <div className="flex items-center content-around gap-10">
+        <TotalIngresos sumaTotalIngresos={sumaTotalIngresos} />
+        <TotalGastos sumaTotalGastos={sumaTotalGastos} />
+      </div>
+      <h1 className="m-3 text-2xl font-bold">Categorias</h1>
+      <ContenedorOperaciones>
+        {
+          categorias ?
+            categorias.map(categoria => (
               <CardCategoria key={categoria.id} categoria={categoria} />
             ))
             :
             <p>Cargando...</p>
-          }
-        </ContenedorOperaciones>
-        <h1 className="m-3 text-2xl font-bold">Ingresos</h1>
-        <ContenedorOperaciones>
-          {ingresos ?
-            ingresos.map(ingreso =>(
-              <CardIngreso key={ingreso.id} ingreso={ingreso} />
-            ))
-            :
-            <p>Cargando...</p>
-          }
-        </ContenedorOperaciones>
-        <h1 className="m-3 text-2xl font-bold">Gastos</h1>
-        <ContenedorOperaciones>
-          {gastos ?
-            gastos.map(gasto =>(
-              <CardGasto key={gasto.id} gasto={gasto} />
-            ))
-            :
-            <p>Cargando...</p>
-          }
-        </ContenedorOperaciones>
-        <FormAggCatIngreso />
-        <FormAggCatGasto />
-        <FormAggIngreso />
-        <FormAggGasto />
-      </div>
+        }
+      </ContenedorOperaciones>
+      <h1 className="m-3 text-2xl font-bold">Ingresos</h1>
+      <ContenedorOperaciones>
+        {ingresos ?
+          ingresos.map(ingreso => (
+            <CardIngreso key={ingreso.id} ingreso={ingreso} />
+          ))
+          :
+          <p>Cargando...</p>
+        }
+      </ContenedorOperaciones>
+      <h1 className="m-3 text-2xl font-bold">Gastos</h1>
+      <ContenedorOperaciones>
+        {gastos ?
+          gastos.map(gasto => (
+            <CardGasto key={gasto.id} gasto={gasto} />
+          ))
+          :
+          <p>Cargando...</p>
+        }
+      </ContenedorOperaciones>
+
+      {context?.openModalCatIngresos === true &&
+        <Modal>
+          <FormAggCatIngreso />
+        </Modal>
+      }
+
+      {context?.openModalCatGastos === true &&
+        <Modal>
+          <FormAggCatGasto />
+        </Modal>
+      }
+
+      {context?.openModalIngresos === true &&
+        <Modal>
+          <FormAggIngreso />
+        </Modal>
+      }
+
+      {context?.openModalGastos === true &&
+        <Modal>
+          <FormAggGasto />
+        </Modal>
+      }
+    </div>
+  );
+}
+
+export default function Home() {
+  return(
+    <AppProvider>
+      <HomeContent />
     </AppProvider>
   );
 }
