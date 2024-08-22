@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { AppProvider, FinanzaContext } from "@/context/FinanzaContext";
 import { Saldo } from "@/components/Saldo";
@@ -19,53 +18,25 @@ import { FormAggCatGasto } from "@/components/FormAggCatGasto";
 import { FormAggIngreso } from "@/components/FormAggIngreso";
 import { FormAggGasto } from "@/components/FormAggGasto";
 import { Modal } from "@/components/Modal";
+import { fetchData } from "@/helpers/fetchData";
 
 function HomeContent() {
   const context = useContext(FinanzaContext);
 
-  const [categorias, setCategorias] = useState<Category[]>([]);
-  const [ingresos, setIngresos] = useState<Ingreso[]>([]);
-  const [gastos, setGastos] = useState<Gasto[]>([]);
-
   const [sumaTotalIngresos, setSumaTotalIngresos] = useState<number>(0);
   const [sumaTotalGastos, setSumaTotalGastos] = useState<number>(0);
 
-  const getCategorias = async () => {
-    try {
-      const response = await axios.get<Category[]>("http://localhost:5216/v1/Categoria");
-      setCategorias(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const getIngresos = async () => {
-    try {
-      const response = await axios.get<Ingreso[]>("http://localhost:5216/v1/Ingreso");
-      setIngresos(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const getGastos = async () => {
-    try {
-      const response = await axios.get<Gasto[]>("http://localhost:5216/v1/Gasto");
-      setGastos(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  const { data: categorias, loading: loadingCategorias } = fetchData<Category[]>("http://localhost:5216/v1/Categoria");
+  const { data: ingresos, loading: loadingIngresos } = fetchData<Ingreso[]>("http://localhost:5216/v1/Ingreso");
+  const { data: gastos, loading: loadingGastos } = fetchData<Gasto[]>("http://localhost:5216/v1/Gasto");
 
   useEffect(() => {
-    getCategorias();
-    getIngresos();
-    getGastos();
-  }, []);
-
-  useEffect(() => {
-    setSumaTotalIngresos(sumarTotal(ingresos));
-    setSumaTotalGastos(sumarTotal(gastos));
+    if(ingresos) {
+      setSumaTotalIngresos(sumarTotal(ingresos));
+    }
+    if(gastos) {
+      setSumaTotalGastos(sumarTotal(gastos));
+    }
   }, [ingresos, gastos]);
 
   return (
