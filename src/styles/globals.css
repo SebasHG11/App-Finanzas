@@ -22,3 +22,42 @@
 .roboto-condensed {
     font-family: "Roboto Condensed", sans-serif;
 }
+
+/* Personalización de la scrollbar */
+::-webkit-scrollbar {
+    width: 8px; 
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #4A5568;
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #2D3748;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #E2E8F0;
+    border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #4A5568;
+    border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #2D3748;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background-color: #E2E8F0;
+    border-radius: 9999px;
+}

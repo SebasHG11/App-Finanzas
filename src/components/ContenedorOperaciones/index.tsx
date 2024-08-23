@@ -6,7 +6,7 @@ type Props = {
 
 export const ContenedorOperaciones = ({ children }: Props):JSX.Element =>{
     return(
-        <div className="m-4 flex items-center content-around gap-7">
+        <div className="max-w-full overflow-x-auto m-4 flex flex-row gap-7 custom-scrollbar">
             {children}
         </div>
     );
