@@ -26,9 +26,17 @@ function HomeContent() {
   const [sumaTotalIngresos, setSumaTotalIngresos] = useState<number>(0);
   const [sumaTotalGastos, setSumaTotalGastos] = useState<number>(0);
 
-  const { data: categorias, loading: loadingCategorias } = fetchData<Category[]>("http://localhost:5216/v1/Categoria");
-  const { data: ingresos, loading: loadingIngresos } = fetchData<Ingreso[]>("http://localhost:5216/v1/Ingreso");
-  const { data: gastos, loading: loadingGastos } = fetchData<Gasto[]>("http://localhost:5216/v1/Gasto");
+  const [refetchCategorias, setRefetchCategorias] = useState(false);
+  const [refetchIngresos, setRefetchIngresos] = useState(false);
+  const [refetchGastos, setRefetchGastos] = useState(false);
+
+  const [categorias, setCategorias] = useState<Category[]>([]);
+  const [ingresos, setIngresos] = useState<Ingreso[]>([]);
+  const [gastos, setGastos] = useState<Gasto[]>([]);
+
+  const { data: categoriasFetch, loading: loadingCategorias } = fetchData<Category[]>("http://localhost:5216/v1/Categoria", refetchCategorias);
+  const { data: ingresosFetch, loading: loadingIngresos } = fetchData<Ingreso[]>("http://localhost:5216/v1/Ingreso", refetchIngresos);
+  const { data: gastosFetch, loading: loadingGastos } = fetchData<Gasto[]>("http://localhost:5216/v1/Gasto", refetchGastos);
 
   useEffect(() => {
     if(ingresos) {
@@ -38,6 +46,39 @@ function HomeContent() {
       setSumaTotalGastos(sumarTotal(gastos));
     }
   }, [ingresos, gastos]);
+
+  const closeModal = () => {
+    setRefetchCategorias(true);
+    setRefetchIngresos(true);
+    setRefetchGastos(true);
+  }
+
+  useEffect(() => {
+    closeModal();
+  },[
+      context?.openModalCatGastos,
+      context?.openModalCatIngresos, 
+      context?.openModalIngresos, 
+      context?.openModalGastos
+    ]
+  );
+
+  useEffect(() => {
+    if(categoriasFetch) setCategorias(categoriasFetch);
+    if(ingresosFetch) setIngresos(ingresosFetch);
+    if(gastosFetch) setGastos(gastosFetch);
+    setRefetchCategorias(false);
+    setRefetchIngresos(false);
+    setRefetchGastos(false);
+  },[
+      categoriasFetch, 
+      ingresosFetch, 
+      gastosFetch, 
+      refetchCategorias, 
+      refetchIngresos, 
+      refetchGastos
+    ]
+  );
 
   return (
     <div className="m-10 grid place-items-center">
