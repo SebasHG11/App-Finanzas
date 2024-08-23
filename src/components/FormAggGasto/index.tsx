@@ -3,6 +3,7 @@ import { fetchData } from "@/helpers/fetchData";
 import { postData } from "@/helpers/postData";
 import { useForm } from "@/helpers/useForm";
 import { FormEvent, useContext, useEffect, useState, MouseEvent } from "react";
+import { toast } from "sonner";
 
 type GastoPayload = {
   concepto: string,
@@ -59,9 +60,9 @@ export const FormAggGasto = (): JSX.Element => {
     };
     try{
       const response = await postData<GastoPayload, Gasto>(url, payload);
-      console.log(response);
       resetForm();
       context?.setOpenModalGastos(false);
+      toast.success(`¡El gasto ${response.concepto} se agrego con exito!`);
     } catch(error) {
       console.error("Error al crear la categoría:", error);
     }

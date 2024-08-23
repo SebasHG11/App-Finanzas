@@ -19,6 +19,7 @@ import { FormAggIngreso } from "@/components/FormAggIngreso";
 import { FormAggGasto } from "@/components/FormAggGasto";
 import { Modal } from "@/components/Modal";
 import { fetchData } from "@/helpers/fetchData";
+import { Toaster } from "sonner";
 
 function HomeContent() {
   const context = useContext(FinanzaContext);
@@ -82,6 +83,7 @@ function HomeContent() {
 
   return (
     <div className="m-10 grid place-items-center">
+      <Toaster position="top-center" />
       <Saldo />
       <div className="flex items-center content-around gap-10 m-5">
         <BtnCrearCategoriaIngresos />

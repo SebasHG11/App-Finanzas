@@ -2,6 +2,7 @@ import { FinanzaContext } from "@/context/FinanzaContext";
 import { postData } from "@/helpers/postData";
 import { useForm } from "@/helpers/useForm";
 import { FormEvent, MouseEvent, useContext } from "react";
+import { toast } from "sonner";
 
 type CategoriaIngresoPayload = {
   nombre: string,
@@ -30,9 +31,9 @@ export const FormAggCatIngreso = (): JSX.Element => {
     
     try{
       const response = await postData<CategoriaIngresoPayload, Category>(url, payload)
-      console.log(response);
       resetForm();
       context?.setOpenModalCatIngresos(false);
+      toast.success(`¡La categoria de ingreso ${response.nombre} se agrego con exito!`);
     } catch(error) {
       console.error("Error al crear la categoría:", error);
     }
