@@ -86,7 +86,7 @@ function HomeContent() {
   return (
     <div className="m-10 grid place-items-center">
       <Toaster position="top-center" richColors />
-      <Saldo />
+      <Saldo sumaTotalIngresos={sumaTotalIngresos} sumaTotalGastos={sumaTotalGastos} />
       <div className="flex items-center content-around gap-10 m-5">
         <BtnCrearCategoriaIngresos />
         <BtnCrearCategoriaGastos />
