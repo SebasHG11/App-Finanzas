@@ -1,6 +1,12 @@
 import { FinanzaContext } from "@/context/FinanzaContext";
+import { postData } from "@/helpers/postData";
 import { useForm } from "@/helpers/useForm";
 import { FormEvent, MouseEvent, useContext } from "react";
+
+type CategoriaIngresoPayload = {
+  nombre: string,
+  presupuesto: number
+}
 
 export const FormAggCatIngreso = (): JSX.Element => {
   const context = useContext(FinanzaContext);
@@ -14,14 +20,22 @@ export const FormAggCatIngreso = (): JSX.Element => {
 
   const { nombre, presupuesto } = formState;
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const payload = {
+    const url = "http://localhost:5216/v1/Categoria/Ingresos";
+    const payload: CategoriaIngresoPayload = {
       nombre: nombre,
       presupuesto: parseFloat(presupuesto)
     };
-    console.log(payload);
-    resetForm();
+    
+    try{
+      const response = await postData<CategoriaIngresoPayload, Category>(url, payload)
+      console.log(response);
+      resetForm();
+      context?.setOpenModalCatIngresos(false);
+    } catch(error) {
+      console.error("Error al crear la categoría:", error);
+    }
   }
 
   const handleCancelar = (e: MouseEvent<HTMLSpanElement, globalThis.MouseEvent>) => {
