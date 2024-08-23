@@ -15,7 +15,9 @@ type FinanzaContextType = {
   openModalIngresos: boolean,
   setOpenModalIngresos: Dispatch<SetStateAction<boolean>>,
   openModalGastos: boolean,
-  setOpenModalGastos: Dispatch<SetStateAction<boolean>>
+  setOpenModalGastos: Dispatch<SetStateAction<boolean>>,
+  deleteElement: boolean,
+  setDeleteElement: Dispatch<SetStateAction<boolean>>
 }
 
 export const FinanzaContext = createContext<FinanzaContextType | undefined>(undefined);
@@ -76,6 +78,8 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
   const [openModalIngresos, setOpenModalIngresos] = useState<boolean>(false);
   const [openModalGastos, setOpenModalGastos] = useState<boolean>(false);
 
+  const [deleteElement, setDeleteElement] = useState<boolean>(false);
+
   return (
     <FinanzaContext.Provider value={{
       formatMonto,
@@ -88,7 +92,9 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
       openModalIngresos,
       setOpenModalIngresos,
       openModalGastos,
-      setOpenModalGastos
+      setOpenModalGastos,
+      deleteElement,
+      setDeleteElement
     }}>
       {children}
     </FinanzaContext.Provider>

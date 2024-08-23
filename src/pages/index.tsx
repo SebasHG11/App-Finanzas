@@ -60,7 +60,8 @@ function HomeContent() {
       context?.openModalCatGastos,
       context?.openModalCatIngresos, 
       context?.openModalIngresos, 
-      context?.openModalGastos
+      context?.openModalGastos,
+      context?.deleteElement
     ]
   );
 
@@ -71,6 +72,7 @@ function HomeContent() {
     setRefetchCategorias(false);
     setRefetchIngresos(false);
     setRefetchGastos(false);
+    context?.setDeleteElement(false);
   },[
       categoriasFetch, 
       ingresosFetch, 
@@ -83,7 +85,7 @@ function HomeContent() {
 
   return (
     <div className="m-10 grid place-items-center">
-      <Toaster position="top-center" />
+      <Toaster position="top-center" richColors />
       <Saldo />
       <div className="flex items-center content-around gap-10 m-5">
         <BtnCrearCategoriaIngresos />
