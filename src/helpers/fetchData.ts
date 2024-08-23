@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 
-export const fetchData = <T>(url: string) => {
+export const fetchData = <T>(url: string, refetch: boolean) => {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<AxiosError | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -19,7 +19,7 @@ export const fetchData = <T>(url: string) => {
     };
 
     getData();
-  }, [url]);
+  }, [url, refetch]);
 
   return {
     data,
