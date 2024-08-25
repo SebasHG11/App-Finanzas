@@ -45,6 +45,8 @@ export const Mes = (): JSX.Element => {
         <select
           className="text-gray-800 font-semibold text-2xl text-center"
           name="año"
+          onChange={(e) => context?.setAño(parseInt(e.target.value))}
+          value={context?.año}
         >
           <option value="">Selecciona una año</option>
           {años.map((año, index) => (

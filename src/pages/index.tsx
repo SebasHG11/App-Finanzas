@@ -24,6 +24,7 @@ import { FormEditCat } from "@/components/FormEditCat";
 import { FormEditIngreso } from "@/components/FormEditIngreso";
 import { FormEditGasto } from "@/components/FormEditGasto";
 import { extraerMes } from "@/helpers/extraerMes";
+import { extraerAnio } from "@/helpers/extraerAnio";
 
 function HomeContent() {
   const context = useContext(FinanzaContext);
@@ -47,11 +48,11 @@ function HomeContent() {
   const { data: gastosFetch, loading: loadingGastos } = fetchData<Gasto[]>("http://localhost:5216/v1/Gasto", refetchGastos);
 
   useEffect(() => {
-    if(ingresos && ingresosFetch) {
+    if (ingresos && ingresosFetch) {
       setSumaMesIngresos(sumarTotal(ingresos));
       setSumaTotalIngresos(sumarTotal(ingresosFetch));
     }
-    if(gastos && gastosFetch) {
+    if (gastos && gastosFetch) {
       setSumaMesGastos(sumarTotal(gastos));
       setSumaTotalGastos(sumarTotal(gastosFetch));
     }
@@ -65,28 +66,33 @@ function HomeContent() {
 
   useEffect(() => {
     closeModal();
-  },[
-      context?.openModalCatGastos,
-      context?.openModalCatIngresos, 
-      context?.openModalIngresos, 
-      context?.openModalGastos,
-      context?.deleteElement,
-      context?.editElement,
-      context?.mes
-    ]
+  }, [
+    context?.openModalCatGastos,
+    context?.openModalCatIngresos,
+    context?.openModalIngresos,
+    context?.openModalGastos,
+    context?.deleteElement,
+    context?.editElement,
+    context?.mes,
+    context?.año
+  ]
   );
 
   useEffect(() => {
-    if(categoriasFetch) setCategorias(categoriasFetch);
+    if (categoriasFetch) setCategorias(categoriasFetch);
 
-    if(ingresosFetch) {
-      const ingresosFilterMes = ingresosFetch.filter(ingreso => extraerMes(ingreso.fecha) === context?.mes);
-      setIngresos(ingresosFilterMes);
+    if (ingresosFetch) {
+      const ingresosFilterMesYAño: Ingreso[] = ingresosFetch.filter(ingreso => (
+        extraerMes(ingreso.fecha) === context?.mes && extraerAnio(ingreso.fecha) === context.año
+      ));
+      setIngresos(ingresosFilterMesYAño);
     }
 
-    if(gastosFetch) {
-      const gastosFilterMes = gastosFetch.filter(gasto => extraerMes(gasto.fecha) === context?.mes);
-      setGastos(gastosFilterMes);
+    if (gastosFetch) {
+      const gastosFilterMesYAño: Gasto[] = gastosFetch.filter(gasto => (
+        extraerMes(gasto.fecha) === context?.mes && extraerAnio(gasto.fecha) === context.año
+      ));
+      setGastos(gastosFilterMesYAño);
     }
 
     setRefetchCategorias(false);
@@ -94,14 +100,14 @@ function HomeContent() {
     setRefetchGastos(false);
     context?.setDeleteElement(false);
     context?.setEditElement(false);
-  },[
-      categoriasFetch, 
-      ingresosFetch, 
-      gastosFetch, 
-      refetchCategorias, 
-      refetchIngresos, 
-      refetchGastos
-    ]
+  }, [
+    categoriasFetch,
+    ingresosFetch,
+    gastosFetch,
+    refetchCategorias,
+    refetchIngresos,
+    refetchGastos
+  ]
   );
 
   return (
@@ -194,7 +200,7 @@ function HomeContent() {
 }
 
 export default function Home() {
-  return(
+  return (
     <AppProvider>
       <HomeContent />
     </AppProvider>
