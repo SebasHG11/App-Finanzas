@@ -23,9 +23,13 @@ import { Toaster } from "sonner";
 import { FormEditCat } from "@/components/FormEditCat";
 import { FormEditIngreso } from "@/components/FormEditIngreso";
 import { FormEditGasto } from "@/components/FormEditGasto";
+import { extraerMes } from "@/helpers/extraerMes";
 
 function HomeContent() {
   const context = useContext(FinanzaContext);
+
+  const [sumaMesIngresos, setSumaMesIngresos] = useState<number>(0);
+  const [sumaMesGastos, setSumaMesGastos] = useState<number>(0);
 
   const [sumaTotalIngresos, setSumaTotalIngresos] = useState<number>(0);
   const [sumaTotalGastos, setSumaTotalGastos] = useState<number>(0);
@@ -43,11 +47,13 @@ function HomeContent() {
   const { data: gastosFetch, loading: loadingGastos } = fetchData<Gasto[]>("http://localhost:5216/v1/Gasto", refetchGastos);
 
   useEffect(() => {
-    if(ingresos) {
-      setSumaTotalIngresos(sumarTotal(ingresos));
+    if(ingresos && ingresosFetch) {
+      setSumaMesIngresos(sumarTotal(ingresos));
+      setSumaTotalIngresos(sumarTotal(ingresosFetch));
     }
-    if(gastos) {
-      setSumaTotalGastos(sumarTotal(gastos));
+    if(gastos && gastosFetch) {
+      setSumaMesGastos(sumarTotal(gastos));
+      setSumaTotalGastos(sumarTotal(gastosFetch));
     }
   }, [ingresos, gastos]);
 
@@ -65,14 +71,24 @@ function HomeContent() {
       context?.openModalIngresos, 
       context?.openModalGastos,
       context?.deleteElement,
-      context?.editElement
+      context?.editElement,
+      context?.mes
     ]
   );
 
   useEffect(() => {
     if(categoriasFetch) setCategorias(categoriasFetch);
-    if(ingresosFetch) setIngresos(ingresosFetch);
-    if(gastosFetch) setGastos(gastosFetch);
+
+    if(ingresosFetch) {
+      const ingresosFilterMes = ingresosFetch.filter(ingreso => extraerMes(ingreso.fecha) === context?.mes);
+      setIngresos(ingresosFilterMes);
+    }
+
+    if(gastosFetch) {
+      const gastosFilterMes = gastosFetch.filter(gasto => extraerMes(gasto.fecha) === context?.mes);
+      setGastos(gastosFilterMes);
+    }
+
     setRefetchCategorias(false);
     setRefetchIngresos(false);
     setRefetchGastos(false);
@@ -100,8 +116,8 @@ function HomeContent() {
       </div>
       <Mes />
       <div className="flex items-center content-around gap-10">
-        <TotalIngresos sumaTotalIngresos={sumaTotalIngresos} />
-        <TotalGastos sumaTotalGastos={sumaTotalGastos} />
+        <TotalIngresos sumaTotalIngresos={sumaMesIngresos} />
+        <TotalGastos sumaTotalGastos={sumaMesGastos} />
       </div>
       <h1 className="m-3 text-2xl font-bold">Categorias</h1>
       <ContenedorOperaciones>

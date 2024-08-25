@@ -31,7 +31,11 @@ type FinanzaContextType = {
   gastoEdit: Gasto | undefined,
   setGastoEdit: Dispatch<SetStateAction<Gasto | undefined>>,
   editElement: boolean,
-  setEditElement: Dispatch<SetStateAction<boolean>>
+  setEditElement: Dispatch<SetStateAction<boolean>>,
+  mes: number,
+  setMes: Dispatch<SetStateAction<number>>,
+  año: number,
+  setAño: Dispatch<SetStateAction<number>>
 }
 
 export const FinanzaContext = createContext<FinanzaContextType | undefined>(undefined);
@@ -98,6 +102,9 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
 
   const [editElement, setEditElement] = useState<boolean>(false);
 
+  const [mes, setMes] = useState<number>(0);
+  const [año, setAño] = useState<number>(0);
+
   return (
     <FinanzaContext.Provider value={{
       formatMonto,
@@ -126,7 +133,11 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
       gastoEdit,
       setGastoEdit,
       editElement,
-      setEditElement
+      setEditElement,
+      mes,
+      setMes,
+      año,
+      setAño
     }}>
       {children}
     </FinanzaContext.Provider>
