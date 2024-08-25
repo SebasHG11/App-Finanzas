@@ -1,7 +1,9 @@
 import { FinanzaContext } from "@/context/FinanzaContext";
 import { fetchData } from "@/helpers/fetchData";
+import { putData } from "@/helpers/putData";
 import { useForm } from "@/helpers/useForm";
 import { FormEvent, MouseEvent, useContext, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 type GastoPayload = {
   concepto: string | undefined,
@@ -38,14 +40,30 @@ export const FormEditGasto = (): JSX.Element => {
 
   const { concepto, monto, fecha, categoriaId } = formState;
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!context?.gastoEdit?.id) {
+      toast.error("ID de gasto no disponible", { duration: 3000 });
+      return;
+    }
+
+    const url = `http://localhost:5216/v1/Gasto/${context?.gastoEdit?.id}`;
     const envio: GastoPayload = {
       concepto: concepto,
       monto: monto,
-      fecha: fecha,
+      fecha: context.formatDateUTC(fecha || ""),
       categoriaId: categoriaId
     }
+
+    try {
+      await putData(url, envio);
+      context.setEditElement(true);
+    } catch {
+      toast.error("Error al enviar los datos", { duration: 3000 });
+    }
+
+    context.setOpenModalEditGasto(false);
   }
 
   const handleCancelar = (e: MouseEvent<HTMLSpanElement, globalThis.MouseEvent>) => {
