@@ -29,7 +29,9 @@ type FinanzaContextType = {
   ingresoEdit: Ingreso | undefined,
   setIngresoEdit: Dispatch<SetStateAction<Ingreso | undefined>>,
   gastoEdit: Gasto | undefined,
-  setGastoEdit: Dispatch<SetStateAction<Gasto | undefined>>
+  setGastoEdit: Dispatch<SetStateAction<Gasto | undefined>>,
+  editElement: boolean,
+  setEditElement: Dispatch<SetStateAction<boolean>>
 }
 
 export const FinanzaContext = createContext<FinanzaContextType | undefined>(undefined);
@@ -94,6 +96,8 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
   const [ingresoEdit, setIngresoEdit] = useState<Ingreso>();
   const [gastoEdit, setGastoEdit] = useState<Gasto>();
 
+  const [editElement, setEditElement] = useState<boolean>(false);
+
   return (
     <FinanzaContext.Provider value={{
       formatMonto,
@@ -120,7 +124,9 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
       ingresoEdit,
       setIngresoEdit,
       gastoEdit,
-      setGastoEdit
+      setGastoEdit,
+      editElement,
+      setEditElement
     }}>
       {children}
     </FinanzaContext.Provider>
