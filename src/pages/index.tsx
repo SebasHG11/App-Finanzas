@@ -20,6 +20,9 @@ import { FormAggGasto } from "@/components/FormAggGasto";
 import { Modal } from "@/components/Modal";
 import { fetchData } from "@/helpers/fetchData";
 import { Toaster } from "sonner";
+import { FormEditCat } from "@/components/FormEditCat";
+import { FormEditIngreso } from "@/components/FormEditIngreso";
+import { FormEditGasto } from "@/components/FormEditGasto";
 
 function HomeContent() {
   const context = useContext(FinanzaContext);
@@ -109,6 +112,11 @@ function HomeContent() {
             <p>Cargando...</p>
         }
       </ContenedorOperaciones>
+      {context?.openModalEditCat &&
+        <Modal>
+          <FormEditCat />
+        </Modal>
+      }
       <h1 className="m-3 text-2xl font-bold">Ingresos</h1>
       <ContenedorOperaciones>
         {ingresos ?
@@ -119,6 +127,11 @@ function HomeContent() {
           <p>Cargando...</p>
         }
       </ContenedorOperaciones>
+      {context?.openModalEditIngreso &&
+        <Modal>
+          <FormEditIngreso />
+        </Modal>
+      }
       <h1 className="m-3 text-2xl font-bold">Gastos</h1>
       <ContenedorOperaciones>
         {gastos ?
@@ -129,6 +142,11 @@ function HomeContent() {
           <p>Cargando...</p>
         }
       </ContenedorOperaciones>
+      {context?.openModalEditGasto &&
+        <Modal>
+          <FormEditGasto />
+        </Modal>
+      }
 
       {context?.openModalCatIngresos === true &&
         <Modal>

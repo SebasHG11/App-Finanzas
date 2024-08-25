@@ -17,7 +17,19 @@ type FinanzaContextType = {
   openModalGastos: boolean,
   setOpenModalGastos: Dispatch<SetStateAction<boolean>>,
   deleteElement: boolean,
-  setDeleteElement: Dispatch<SetStateAction<boolean>>
+  setDeleteElement: Dispatch<SetStateAction<boolean>>,
+  openModalEditCat: boolean,
+  setOpenModalEditCat: Dispatch<SetStateAction<boolean>>,
+  openModalEditIngreso: boolean,
+  setOpenModalEditIngreso: Dispatch<SetStateAction<boolean>>,
+  openModalEditGasto: boolean,
+  setOpenModalEditGasto: Dispatch<SetStateAction<boolean>>,
+  categoriaEdit: Category | undefined,
+  setCategoriaEdit: Dispatch<SetStateAction<Category | undefined>>,
+  ingresoEdit: Ingreso | undefined,
+  setIngresoEdit: Dispatch<SetStateAction<Ingreso | undefined>>,
+  gastoEdit: Gasto | undefined,
+  setGastoEdit: Dispatch<SetStateAction<Gasto | undefined>>
 }
 
 export const FinanzaContext = createContext<FinanzaContextType | undefined>(undefined);
@@ -80,6 +92,14 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
 
   const [deleteElement, setDeleteElement] = useState<boolean>(false);
 
+  const [openModalEditCat, setOpenModalEditCat] = useState<boolean>(false);
+  const [openModalEditIngreso, setOpenModalEditIngreso] = useState<boolean>(false);
+  const [openModalEditGasto, setOpenModalEditGasto] = useState<boolean>(false);
+
+  const [categoriaEdit, setCategoriaEdit] = useState<Category>();
+  const [ingresoEdit, setIngresoEdit] = useState<Ingreso>();
+  const [gastoEdit, setGastoEdit] = useState<Gasto>();
+
   return (
     <FinanzaContext.Provider value={{
       formatMonto,
@@ -94,7 +114,19 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
       openModalGastos,
       setOpenModalGastos,
       deleteElement,
-      setDeleteElement
+      setDeleteElement,
+      openModalEditCat,
+      setOpenModalEditCat,
+      openModalEditIngreso,
+      setOpenModalEditIngreso,
+      openModalEditGasto,
+      setOpenModalEditGasto,
+      categoriaEdit,
+      setCategoriaEdit,
+      ingresoEdit,
+      setIngresoEdit,
+      gastoEdit,
+      setGastoEdit
     }}>
       {children}
     </FinanzaContext.Provider>

@@ -33,6 +33,12 @@ export const CardIngreso = ({ ingreso }: Props): JSX.Element => {
     })
   }
 
+  const handleEditar = (e: MouseEvent<HTMLSpanElement, globalThis.MouseEvent>) => {
+    e.preventDefault();
+    context?.setIngresoEdit(ingreso);
+    context?.setOpenModalEditIngreso(true);
+  }
+
   return (
     <div className="p-4 min-w-60 w-60 grid place-items-center border-2 bg-green-100 border-green-600 rounded-lg">
       <h4 className="font-semibold text-xl text-center">
@@ -55,7 +61,10 @@ export const CardIngreso = ({ ingreso }: Props): JSX.Element => {
         >
           Eliminar
         </span>
-        <span className="bg-yellow-400 text-white font-bold px-2 py-1 rounded-lg cursor-pointer">
+        <span 
+          onClick={handleEditar}
+          className="bg-yellow-400 text-white font-bold px-2 py-1 rounded-lg cursor-pointer"
+        >
           Editar
         </span>
       </div>

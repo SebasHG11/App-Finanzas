@@ -1,5 +1,6 @@
 import { FinanzaContext } from "@/context/FinanzaContext";
-import { useContext } from "react";
+import { tree } from "next/dist/build/templates/app-page";
+import { useContext, MouseEvent } from "react";
 
 type Props = {
   categoria: Category
@@ -7,6 +8,12 @@ type Props = {
 
 export const CardCategoria = ({ categoria }: Props): JSX.Element => {
   const context = useContext(FinanzaContext);
+
+  const handleEditar = (e: MouseEvent<HTMLSpanElement, globalThis.MouseEvent>) => {
+    e.preventDefault();
+    context?.setCategoriaEdit(categoria);
+    context?.setOpenModalEditCat(true);
+  }
 
   return (
     <div className="p-4 min-w-60 w-60 grid place-items-center border border-black rounded-lg">
@@ -21,7 +28,10 @@ export const CardCategoria = ({ categoria }: Props): JSX.Element => {
         {categoria.tipo}
       </p>
       <div className="m-1 flex items-center justify-around gap-2">
-        <span className="bg-yellow-400 text-white font-bold px-2 py-1 rounded-lg cursor-pointer">
+        <span 
+          onClick={handleEditar}
+          className="bg-yellow-400 text-white font-bold px-2 py-1 rounded-lg cursor-pointer"
+        >
           Editar
         </span>
       </div>
