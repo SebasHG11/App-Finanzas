@@ -1,6 +1,8 @@
 import { FinanzaContext } from "@/context/FinanzaContext";
+import { putData } from "@/helpers/putData";
 import { useForm } from "@/helpers/useForm";
 import { FormEvent, useContext, MouseEvent } from "react";
+import { toast } from "sonner";
 
 type CategoriaPayload = {
   nombre: string | undefined;
@@ -19,13 +21,26 @@ export const FormEditCat = (): JSX.Element => {
 
   const { nombre, presupuesto } = formState;
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!context?.categoriaEdit?.id) {
+      toast.error("ID de categoría no disponible", { duration: 3000 });
+      return;
+    }
+
+    const url = `http://localhost:5216/v1/Categoria/${context?.categoriaEdit?.id}`;
     const envio: CategoriaPayload = {
       nombre: nombre,
       presupuesto: presupuesto
     }
+    try{
+      await putData(url, envio);
+      context.setEditElement(true);
+    } catch {
+      toast.error("Error al enviar los datos", { duration: 3000 });
+    }
+    context.setOpenModalEditCat(false);
   }
 
   const handleCancelar = (e: MouseEvent<HTMLSpanElement, globalThis.MouseEvent>) => {

@@ -64,7 +64,8 @@ function HomeContent() {
       context?.openModalCatIngresos, 
       context?.openModalIngresos, 
       context?.openModalGastos,
-      context?.deleteElement
+      context?.deleteElement,
+      context?.editElement
     ]
   );
 
@@ -76,6 +77,7 @@ function HomeContent() {
     setRefetchIngresos(false);
     setRefetchGastos(false);
     context?.setDeleteElement(false);
+    context?.setEditElement(false);
   },[
       categoriasFetch, 
       ingresosFetch, 
