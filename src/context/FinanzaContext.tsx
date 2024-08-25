@@ -48,12 +48,14 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
       return 'Fecha inválida';
     }
   
-    let date = new Date(fecha);
+    const date = new Date(fecha);
+    
+    // Validar si la fecha es válida
+    if (isNaN(date.getTime())) {
+      return 'Fecha inválida';
+    }
   
-    // Restar 5 horas a la fecha
-    date = new Date(date.getTime() - 5 * 60 * 60 * 1000);
-  
-    // Formatear la fecha como 'DD/MM/YYYY HH:mm' en la zona horaria de Bogotá
+    // Formatear la fecha directamente en la zona horaria de Bogotá
     const options: Intl.DateTimeFormatOptions = {
       timeZone: 'America/Bogota',
       day: '2-digit',
@@ -67,23 +69,15 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
     const formattedDate = date.toLocaleString('es-CO', options);
   
     return formattedDate.replace(',', '');
-  };
+  }; 
   
   const formatDateUTC = (fecha: string): string => {
     const date = new Date(fecha);
-  
-    // Obtener componentes de la fecha en UTC
-    const year = date.getUTCFullYear();
-    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-    const day = String(date.getUTCDate()).padStart(2, '0');
-    const hours = String(date.getUTCHours()).padStart(2, '0');
-    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
-    const seconds = String(date.getUTCSeconds()).padStart(2, '0');
-    const milliseconds = String(date.getUTCMilliseconds()).padStart(3, '0');
-  
-    // Formato ISO 8601 en UTC
-    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+    const timeOffsetInMinutes = date.getTimezoneOffset();
+    date.setMinutes(date.getMinutes() - timeOffsetInMinutes);
+    return date.toISOString();
   };
+  
   
   const [openModalCatIngresos, setOpenModalCatIngresos] = useState<boolean>(false);
   const [openModalCatGastos, setOpenModalCatGastos] = useState<boolean>(false);
