@@ -1,4 +1,5 @@
 import { FinanzaContext } from "@/context/FinanzaContext";
+import { tomarTotalPorCategoria } from "@/helpers/tomarTotalPorCategoria";
 import { useContext, useEffect, useState } from "react";
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
@@ -12,22 +13,12 @@ export const GraficoCatIngresos = () => {
   const [categoriasIngreso, setCategoriasIngreso] = useState<Categoria[]>([]);
 
   useEffect(() => {
-    const totalPorCategoria = context?.ingresosMes?.reduce((acc: Record<number, number>, ingreso) => {
-      if (!acc[ingreso.categoriaId]) {
-        acc[ingreso.categoriaId] = 0;
-      }
-      acc[ingreso.categoriaId] += ingreso.monto;
-      return acc;
-    }, {}) || {}
+    const totalCategoriaMes = tomarTotalPorCategoria(context?.ingresosMes || []);
 
-    const categoriaIngresosArray = Object.keys(totalPorCategoria || {}).map(categoriaId => {
-      const id = Number(categoriaId);
-      const categoria = context?.categoriasIngreso?.find(cat => cat.id === id);
-      return {
-        nombre: categoria?.nombre || "Desconocido",
-        gastoTotal: totalPorCategoria[id]
-      };
-    })
+    const categoriaIngresosArray = totalCategoriaMes.map(a =>({
+      nombre: context?.categoriasIngreso?.find(cat => cat.id === a.categoriaId)?.nombre || "Desconocido",
+      gastoTotal: a.total
+    }));
 
     setCategoriasIngreso(categoriaIngresosArray);
     console.log(categoriasIngreso);
