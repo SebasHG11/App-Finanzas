@@ -35,7 +35,15 @@ type FinanzaContextType = {
   mes: number,
   setMes: Dispatch<SetStateAction<number>>,
   año: number,
-  setAño: Dispatch<SetStateAction<number>>
+  setAño: Dispatch<SetStateAction<number>>,
+  ingresosMes: Ingreso[] | undefined,
+  setIngresosMes: Dispatch<SetStateAction<Ingreso[] | undefined>>,
+  gastosMes: Gasto[] | undefined,
+  setGastosMes: Dispatch<SetStateAction<Gasto[] | undefined>>,
+  categoriasIngreso: Category[] | undefined,
+  setCategoriasIngreso: Dispatch<SetStateAction<Category[] | undefined>>
+  categoriasGasto: Category[] | undefined,
+  setCategoriasGasto: Dispatch<SetStateAction<Category[] | undefined>>
 }
 
 export const FinanzaContext = createContext<FinanzaContextType | undefined>(undefined);
@@ -105,6 +113,11 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
   const [mes, setMes] = useState<number>(0);
   const [año, setAño] = useState<number>(0);
 
+  const [ingresosMes, setIngresosMes] = useState<Ingreso[]>();
+  const [gastosMes, setGastosMes] = useState<Gasto[]>();
+  const [categoriasIngreso, setCategoriasIngreso] = useState<Category[]>();
+  const [categoriasGasto, setCategoriasGasto] = useState<Category[]>();
+
   return (
     <FinanzaContext.Provider value={{
       formatMonto,
@@ -137,7 +150,15 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
       mes,
       setMes,
       año,
-      setAño
+      setAño,
+      ingresosMes,
+      setIngresosMes,
+      gastosMes,
+      setGastosMes,
+      categoriasIngreso,
+      setCategoriasIngreso,
+      categoriasGasto,
+      setCategoriasGasto
     }}>
       {children}
     </FinanzaContext.Provider>

@@ -25,6 +25,8 @@ import { FormEditIngreso } from "@/components/FormEditIngreso";
 import { FormEditGasto } from "@/components/FormEditGasto";
 import { extraerMes } from "@/helpers/extraerMes";
 import { extraerAnio } from "@/helpers/extraerAnio";
+import { Dashboard } from "@/components/DashBoard";
+import { GraficoCatGastos } from "@/components/GraficoCatGastos";
 
 function HomeContent() {
   const context = useContext(FinanzaContext);
@@ -51,10 +53,18 @@ function HomeContent() {
     if (ingresos && ingresosFetch) {
       setSumaMesIngresos(sumarTotal(ingresos));
       setSumaTotalIngresos(sumarTotal(ingresosFetch));
+      context?.setIngresosMes(ingresos);
     }
     if (gastos && gastosFetch) {
       setSumaMesGastos(sumarTotal(gastos));
       setSumaTotalGastos(sumarTotal(gastosFetch));
+      context?.setGastosMes(gastos);
+    }
+    if(categorias) {
+      const filterCatGastos = categorias.filter(cat => cat.tipo === "Gastos");
+      context?.setCategoriasGasto(filterCatGastos);
+      const filterCatIngresos = categorias.filter(cat => cat.tipo === "Ingresos");
+      context?.setCategoriasIngreso(filterCatIngresos);
     }
   }, [ingresos, gastos]);
 
@@ -195,6 +205,9 @@ function HomeContent() {
           <FormAggGasto />
         </Modal>
       }
+
+      <Dashboard />
+
     </div>
   );
 }
