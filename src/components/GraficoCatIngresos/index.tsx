@@ -21,7 +21,6 @@ export const GraficoCatIngresos = () => {
     }));
 
     setCategoriasIngreso(categoriaIngresosArray);
-    console.log(categoriasIngreso);
   }, [context?.categoriasIngreso, context?.ingresosMes]);
 
   return (
