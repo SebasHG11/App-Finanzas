@@ -43,7 +43,11 @@ type FinanzaContextType = {
   categoriasIngreso: Category[] | undefined,
   setCategoriasIngreso: Dispatch<SetStateAction<Category[] | undefined>>
   categoriasGasto: Category[] | undefined,
-  setCategoriasGasto: Dispatch<SetStateAction<Category[] | undefined>>
+  setCategoriasGasto: Dispatch<SetStateAction<Category[] | undefined>>,
+  allIngresos: Ingreso[] | undefined,
+  setAllIngresos: Dispatch<SetStateAction<Ingreso[] | undefined>>,
+  allGastos: Gasto[] | undefined,
+  setAllGastos: Dispatch<SetStateAction<Gasto[] | undefined>>
 }
 
 export const FinanzaContext = createContext<FinanzaContextType | undefined>(undefined);
@@ -118,6 +122,9 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
   const [categoriasIngreso, setCategoriasIngreso] = useState<Category[]>();
   const [categoriasGasto, setCategoriasGasto] = useState<Category[]>();
 
+  const [allIngresos, setAllIngresos] = useState<Ingreso[]>();
+  const [allGastos, setAllGastos] = useState<Gasto[]>();
+
   return (
     <FinanzaContext.Provider value={{
       formatMonto,
@@ -158,7 +165,11 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
       categoriasIngreso,
       setCategoriasIngreso,
       categoriasGasto,
-      setCategoriasGasto
+      setCategoriasGasto,
+      allIngresos,
+      setAllIngresos,
+      allGastos,
+      setAllGastos
     }}>
       {children}
     </FinanzaContext.Provider>

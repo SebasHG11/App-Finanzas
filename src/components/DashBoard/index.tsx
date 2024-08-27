@@ -1,5 +1,6 @@
 import { GraficoCatGastos } from "../GraficoCatGastos";
 import { GraficoCatIngresos } from "../GraficoCatIngresos";
+import { GraficoIngGasPorAnio } from "../GraficoIngGasPorAnio";
 import { GraficoIngresosGastos } from "../GraficoIngresosGastos";
 
 export const Dashboard = (): JSX.Element => {
@@ -10,6 +11,9 @@ export const Dashboard = (): JSX.Element => {
         <GraficoIngresosGastos />
         <GraficoCatGastos />
         <GraficoCatIngresos />
+      </div>
+      <div className="m-6 w-full h-full flex justify-center items-center">
+        <GraficoIngGasPorAnio />
       </div>
     </div>
   );

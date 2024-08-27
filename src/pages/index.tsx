@@ -53,11 +53,13 @@ function HomeContent() {
     if (ingresos && ingresosFetch) {
       setSumaMesIngresos(sumarTotal(ingresos));
       setSumaTotalIngresos(sumarTotal(ingresosFetch));
+      context?.setAllIngresos(ingresosFetch);
       context?.setIngresosMes(ingresos);
     }
     if (gastos && gastosFetch) {
       setSumaMesGastos(sumarTotal(gastos));
       setSumaTotalGastos(sumarTotal(gastosFetch));
+      context?.setAllGastos(gastosFetch);
       context?.setGastosMes(gastos);
     }
     if(categorias) {
