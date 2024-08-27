@@ -5,7 +5,8 @@ import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recha
 
 type Categoria = {
   nombre: string,
-  gastoTotal: number
+  gastoTotal: number,
+  presupuesto: number
 }
 
 export const GraficoCatGastos: React.FC = () => {
@@ -19,7 +20,8 @@ export const GraficoCatGastos: React.FC = () => {
 
       const categoriaGastosArray = totalCategoriaMes.map(e =>({
         nombre: context.categoriasGasto?.find(cat => cat.id === e.categoriaId)?.nombre || "Desconocido",
-        gastoTotal: e.total
+        gastoTotal: e.total,
+        presupuesto: context.categoriasGasto?.find(cat => cat.id === e.categoriaId)?.presupuesto || 0
       }))
 
       setCategoriaGastos(categoriaGastosArray);
@@ -39,6 +41,10 @@ export const GraficoCatGastos: React.FC = () => {
           <Bar
             dataKey="gastoTotal"
             fill="#FF6F6F"
+          />
+          <Bar 
+            dataKey="presupuesto"
+            fill="#87CEEB"
           />
           <Tooltip />
         </BarChart>
