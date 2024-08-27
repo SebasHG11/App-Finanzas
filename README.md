@@ -6,11 +6,13 @@ La app es para tener un control financiero, registrando ingresos y gastos, separ
 
 Este es el formulario para agregar categorias de ingresos (el de gastos es igual):
 ![image](https://github.com/user-attachments/assets/abd33439-8239-4db9-9b52-d6984525813e)
+
 Se informa sobre la categoria creada:
 ![image](https://github.com/user-attachments/assets/1ff60c57-2486-46b0-a3b2-5c6dfaa88c89)
 
 Este es el formulario para registrar ingresos (el de gastos es igual):
 ![image](https://github.com/user-attachments/assets/6619b5c3-81a5-4275-8694-73bee1535d94)
+
 De igual forma informa sobre el registro:
 ![image](https://github.com/user-attachments/assets/d336c3d0-7244-45b5-877e-322fd8b4fdbc)
 
