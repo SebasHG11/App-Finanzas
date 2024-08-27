@@ -1,40 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Esta es una aplicación web creada con Next.js, con React y TypeScript, tambien utilice Sonner Toast, ReCharts...
 
-## Getting Started
+En la aplicación se utiliza la API de Finanzas - https://github.com/SebasHG11/API-Finanzas
 
-First, run the development server:
+La app es para tener un control financiero, registrando ingresos y gastos, separandolos por categorias, para luego ver un dashboard en el que se muestra cuanto se gasto por mes, en que categoria de gastos se gasto mas, cual categoria de ingresos obtuvo mas ingresos, y el resumen del año que se elija, en la app se puede filtrar ingresos y gastos por mes y año, ademas los graficos son dinamicos.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Este es el formulario para agregar categorias de ingresos (el de gastos es igual):
+![image](https://github.com/user-attachments/assets/abd33439-8239-4db9-9b52-d6984525813e)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Se informa sobre la categoria creada:
+![image](https://github.com/user-attachments/assets/1ff60c57-2486-46b0-a3b2-5c6dfaa88c89)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Este es el formulario para registrar ingresos (el de gastos es igual):
+![image](https://github.com/user-attachments/assets/6619b5c3-81a5-4275-8694-73bee1535d94)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+De igual forma informa sobre el registro:
+![image](https://github.com/user-attachments/assets/d336c3d0-7244-45b5-877e-322fd8b4fdbc)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Hay una seccion categoria donde se puede ver cada una con su presupuesto:
+![image](https://github.com/user-attachments/assets/2acd7322-0cd2-430e-9ab9-6d867b6e3462)
+Ademas se pueden editar:
+![image](https://github.com/user-attachments/assets/9d02c0b9-2925-40b3-80ea-997948502ca5)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+En la parte superior se puede ver el saldo, segun los ingresos y gastos registrados, ademas hay controles para filtrar por mes y año.
+![image](https://github.com/user-attachments/assets/fec85a9c-9fbf-4f27-a402-3b8053ff1e88)
 
-## Learn More
+Segun el filtrado por mes y año se muestra el total ingresos y total gastos (estos cambian segun el mes).
+![image](https://github.com/user-attachments/assets/a761db0d-fdfe-471a-92cc-f1aa672d3b8a)
 
-To learn more about Next.js, take a look at the following resources:
+Mas abajo esta la seccion ingresos y gastos, que tambien cambian segun el filtrado de mes y año:
+![image](https://github.com/user-attachments/assets/bf3609ef-5aa1-45f2-b14f-45b5073b318f)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Estos se pueden editar y eliminar:
+![image](https://github.com/user-attachments/assets/112a5281-85bd-4b2c-a339-c14da02d5b5f)
+![image](https://github.com/user-attachments/assets/0f67aeb8-b60a-4966-88e4-5aa148438108)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Y al final se encuentra el dashboard que tiene un grafico para comparar los ingresos y gastos segun el mes seleccionado:
+![image](https://github.com/user-attachments/assets/da1cb4c9-5ea7-4a86-8213-a68250158872)
 
-## Deploy on Vercel
+Hay otro grafico que muestra cuanto se gasto en cada categoria de gastos mensual, y se compara con el presupuesto asignado a la categoria:
+![image](https://github.com/user-attachments/assets/6bcf3bd3-c79a-4a7e-99ae-c744353ebd09)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Luego esta otro que muestra como estuvieron los ingresos segun la categoria de ingresos:
+![image](https://github.com/user-attachments/assets/8d24547a-4e7d-4314-ac10-62c3e2ef8f24)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Y el ultimo grafico muestra el rendimiento segun el año que se eligio en el filtro, haciendo una comparativa de ingresos y gastos de cada mes:
+![image](https://github.com/user-attachments/assets/fce43d22-c521-4da6-b204-fcbac4b86518)
